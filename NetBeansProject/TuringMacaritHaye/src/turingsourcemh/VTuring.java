@@ -18,7 +18,7 @@ public class VTuring extends JFrame {
         super("Turing");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        ModTuring modele = new ModTuring();
+        //ModTuring modele = new ModTuring();
         
         JButton btnCharge = new JButton("Charger");
         JButton btnSave = new JButton("Sauvegarder");
@@ -27,71 +27,97 @@ public class VTuring extends JFrame {
         JButton btnStep = new JButton("Faire un pas");
         JButton btnStart = new JButton("Démarrer");
         JButton btnStop = new JButton("Stopper");
-        JLabel lblArrow = new JLabel("=>");
+        JLabel lblArrow = new JLabel("=>", SwingConstants.CENTER);
         JLabel lblInit = new JLabel("Ruban initial:");
-        JLabel lblSpeed = new JLabel("Vitesse");
-        JLabel lblMinus = new JLabel("-");
-        JLabel lblPlus = new JLabel("+");
         JTextField txtRule1 = new JTextField();
         JTextField txtRule2 = new JTextField();
-        JTextArea txtRulesList = new JTextArea("a\n a\n a\n a\n a\n a\n a\n a\n a\n a\n a\n a\n a\n");
+        JTextArea txtRulesList = new JTextArea();
+        txtRulesList.setEditable(false);
         JScrollPane scroll = new JScrollPane(txtRulesList);
         JTextField txtRubanIni = new JTextField();
-        JSlider slideSpeed = new JSlider(0,10,5);
         
         Ruban ruban = new Ruban();
         
-        txtRulesList.setEditable(false);
-        
         //modele.addObserver(txtRulesList);
-        //addObserver
+        //modele.addObserver(ruban);
         
-        JPanel pnlRule = new JPanel();
-        JPanel pnlExec = new JPanel();
-        JPanel pnlRuban = new JPanel();
-        JPanel pnlMain = new JPanel();
-        pnlRule.setLayout(new GridLayout(3,4));
-        pnlExec.setLayout(new GridLayout(2,4));
-        pnlRuban.setLayout(new GridLayout(1,1));
-        pnlMain.setLayout(new GridLayout(3,1));
-        
-        JPanel pnlRuleA = new JPanel();
-        JPanel pnlRuleB = new JPanel();
-        pnlRuleA.setLayout(new GridLayout(1,2));
-        pnlRuleB.setLayout(new GridLayout(1,4));
-        pnlRuleA.add(btnCharge);
-        pnlRuleA.add(btnSave);
-        pnlRuleB.add(btnAdd);
-        pnlRuleB.add(txtRule1);
-        pnlRuleB.add(lblArrow);
-        pnlRuleB.add(txtRule2);
-        pnlRule.add(pnlRuleA);
-        pnlRule.add(pnlRuleB);
-        pnlRule.add(scroll);
-        
-        JPanel pnlExecA = new JPanel();
-        JPanel pnlExecB = new JPanel();
-        pnlExecA.setLayout(new GridLayout(3,2));
-        pnlExecB.setLayout(new GridLayout(1,4));
-        pnlExecA.add(lblInit);
-        pnlExecA.add(txtRubanIni);
-        pnlExecA.add(btnInit);
-        pnlExecA.add(btnStep);
-        pnlExecA.add(btnStart);
-        pnlExecA.add(btnStop);
-        pnlExecB.add(lblSpeed);
-        pnlExecB.add(lblMinus);
-        pnlExecB.add(slideSpeed);
-        pnlExecB.add(lblPlus);
-        pnlExec.add(pnlExecA);
-        pnlExec.add(pnlExecB);
-        
-        pnlRuban.add(ruban);
-        
+        //préparation panels
+        JPanel pnlRule = new JPanel(null);
+        pnlRule.setSize(360,280);
+        pnlRule.setLocation(0,0);
         pnlRule.setBorder(BorderFactory.createTitledBorder("Règles"));
+        
+        JPanel pnlExec = new JPanel(null);
+        pnlExec.setSize(360,210);
+        pnlExec.setLocation(0,290);
         pnlExec.setBorder(BorderFactory.createTitledBorder("Exécution"));
+        
+        JPanel pnlRuban = new JPanel();
+        pnlRuban.setLayout(new GridLayout(1,1));
+        pnlRuban.setSize(360,90);
+        pnlRuban.setLocation(0,510);
         pnlRuban.setBorder(BorderFactory.createTitledBorder("Ruban"));
         
+        JPanel pnlMain = new JPanel(null);
+        
+        //insertion panel règles
+        btnCharge.setSize(120,30);
+        btnCharge.setLocation(30,30);
+        pnlRule.add(btnCharge);
+        
+        btnSave.setSize(120,30);
+        btnSave.setLocation(210,30);
+        pnlRule.add(btnSave);
+        
+        btnAdd.setSize(120,30);
+        btnAdd.setLocation(30,90);
+        pnlRule.add(btnAdd);
+        
+        txtRule1.setSize(60,30);
+        txtRule1.setLocation(180,90);
+        pnlRule.add(txtRule1);
+        
+        lblArrow.setSize(30,30);
+        lblArrow.setLocation(240,90);
+        pnlRule.add(lblArrow);
+        
+        txtRule2.setSize(60,30);
+        txtRule2.setLocation(270,90);
+        pnlRule.add(txtRule2);
+        
+        scroll.setSize(300,100);
+        scroll.setLocation(30,150);
+        pnlRule.add(scroll);
+        
+        //insertion panel exécution
+        lblInit.setSize(80,30);
+        lblInit.setLocation(70,30);
+        pnlExec.add(lblInit);
+        
+        txtRubanIni.setSize(100,30);
+        txtRubanIni.setLocation(180,30);
+        pnlExec.add(txtRubanIni);
+        
+        btnInit.setSize(120,30);
+        btnInit.setLocation(30,90);
+        pnlExec.add(btnInit);
+        
+        btnStep.setSize(120,30);
+        btnStep.setLocation(210,90);
+        pnlExec.add(btnStep);
+        
+        btnStart.setSize(120,30);
+        btnStart.setLocation(30,150);
+        pnlExec.add(btnStart);
+        
+        btnStop.setSize(120,30);
+        btnStop.setLocation(210,150);
+        pnlExec.add(btnStop);
+        
+        //insertion panel ruban
+        pnlRuban.add(ruban);
+        
+        //insertion panel main
         pnlMain.add(pnlRule);
         pnlMain.add(pnlExec);
         pnlMain.add(pnlRuban);
@@ -99,6 +125,7 @@ public class VTuring extends JFrame {
         this.getContentPane().add(pnlMain);
         this.pack();
         this.setVisible(true);
+        this.setSize(360,650);
     }
     
     public static void main(String[] args) {
