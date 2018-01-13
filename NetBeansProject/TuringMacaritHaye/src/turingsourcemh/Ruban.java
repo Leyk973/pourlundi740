@@ -27,12 +27,12 @@ public class Ruban extends JPanel{
         
         for (int i = 0; i < nbC; ++i)
         {
-            tabLab[i] = new JLabel("a", SwingConstants.CENTER);
+            tabLab[i] = new JLabel("", SwingConstants.CENTER);
             tabLab[i].setBorder(border);
             tabLab[i].setOpaque(true);
             tabLab[i].setBackground(Color.white);
             tabLab[i].setSize(30,30);
-            tabLab[i].setLocation(i*30,0);
+            tabLab[i].setLocation((i*30)+30,30);
             this.add(tabLab[i]);
         }
         tabLab[4].setBackground(Color.cyan);
