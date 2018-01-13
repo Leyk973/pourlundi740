@@ -22,6 +22,15 @@ public class ModTuring {
         this.posTete=0;
     }
 
+    public Character rubanPos(int pos){
+        return this.ruban[pos];
+    }
+    
+    public int getPosTete(){
+        return this.posTete;
+    }
+    
+    
     // règles 
     public class TuRegle {
 
