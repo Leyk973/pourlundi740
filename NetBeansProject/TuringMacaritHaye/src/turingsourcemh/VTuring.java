@@ -39,8 +39,7 @@ public class VTuring extends JFrame {
         JTextField txtRubanIni = new JTextField();
         JSlider slideSpeed = new JSlider(0,10,5);
         
-        //Ruban ruban = new Ruban();
-        //LabelCasesTab ruban = new LabelCasesTab();
+        Ruban ruban = new Ruban();
         
         txtRulesList.setEditable(false);
         
@@ -87,7 +86,7 @@ public class VTuring extends JFrame {
         pnlExec.add(pnlExecA);
         pnlExec.add(pnlExecB);
         
-        //pnlRuban.add(ruban);
+        pnlRuban.add(ruban);
         
         pnlRule.setBorder(BorderFactory.createTitledBorder("Règles"));
         pnlExec.setBorder(BorderFactory.createTitledBorder("Exécution"));
@@ -101,8 +100,6 @@ public class VTuring extends JFrame {
         this.pack();
         this.setVisible(true);
     }
-    
-    
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater( new Runnable() {
