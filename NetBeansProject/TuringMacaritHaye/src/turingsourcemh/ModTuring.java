@@ -2,12 +2,13 @@ package turingsourcemh;
 
 //import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  *
  * @author Jean-Loup
  */
-public class ModTuring {
+public class ModTuring extends Observable{
 
     private boolean arret;
     private ArrayList<TuRegle> tabRegles;
@@ -126,10 +127,18 @@ public class ModTuring {
         return wentWell;
     }
     
+    public String rubanToString(){
+        String rub = ruban.toString();
+        return rub;
+    }
+    
     public void faireUnPas(){
         if (!this.arret){
             this.arret=appliquer();
+            setChanged();
+            notifyObservers(rubanToString());
         }
+        
     }
     
     public void deroulerTresVite(){
