@@ -7,50 +7,52 @@ package turingsourcemh;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+public class Ruban extends JPanel implements Observer {
 
-public class Ruban extends JPanel{
-    
     // nombre de cases
     private int nbC = 9;
-    
+
     //tableau contenant les caractères affichés
     private char[] dispRub;
-    
+
     //tableaux contenant les coordonnées du polygone de la tête du pointeur
-    private int[] coorX,coorY;
-    
+    private int[] coorX, coorY;
+
     //sécurité sur la méthode paint()
     private boolean fait = false;
-    
+
     //solution graphics
-    public Ruban(){
+    public Ruban() {
         super(null);
         dispRub = new char[9];
         coorX = new int[3];
         coorY = new int[3];
-        
-        for (int i=0;i<nbC;++i)
-            dispRub[i]=0;
-        
-        coorX[0]=120;
-        coorX[1]=115;
-        coorX[2]=125;
-        coorY[0]=55;
-        coorY[1]=65;
-        coorY[2]=65;
+
+        for (int i = 0; i < nbC; ++i) {
+            dispRub[i] = 0;
+        }
+
+        coorX[0] = 120;
+        coorX[1] = 115;
+        coorX[2] = 125;
+        coorY[0] = 55;
+        coorY[1] = 65;
+        coorY[2] = 65;
     }
-    
-    public void paint(Graphics g){
-        if (fait == false){
+
+    public void paint(Graphics g) {
+        if (fait == false) {
             int bor = 30;
             int dim = 20;
-            
+
             g.setColor(Color.decode("#EDEDED"));
-            
+
             g.fillRect(10, 10, 200, 60);
 
             g.setColor(Color.BLACK);
@@ -60,23 +62,38 @@ public class Ruban extends JPanel{
 
             for (int i = 0; i < nbC; ++i) {
                 g.drawLine(bor + dim * i, bor, bor + dim * i, bor + dim);
-                g.drawString(Integer.toString(dispRub[i]), (bor + dim  * i)+7, (bor + dim / 2)+6);
+                g.drawString(Integer.toString(dispRub[i]), (bor + dim * i) + 7, (bor + dim / 2) + 6);
             }
             g.drawLine(bor + dim * nbC, bor, bor + dim * nbC, bor + dim);
-            
-            g.fillPolygon(coorX,coorY,3);
-            
+
+            g.fillPolygon(coorX, coorY, 3);
+
             fait = true;
         }
     }
     
-    public void updateTab(char[] newRub){
-        for(int i = 0; i < nbC; ++i)
+    /*
+    public void updateTab(char[] newRub) {
+        for (int i = 0; i < nbC; ++i) {
             dispRub[i] = newRub[i];
+        }
         fait = false;
         this.repaint();
     }
-    
+    */
+
+    public void update(Observable o, Object arg) {
+        if ((o instanceof ModTuring) && (arg instanceof String)) {
+            String newRubS = (String) arg;
+            char[] newRub = newRubS.toCharArray();
+            for (int i = 0; i < nbC; ++i) {
+                dispRub[i] = newRub[i];
+            }
+            fait = false;
+            this.repaint();
+        }
+    }
+
     //solution JLabel
     /*
     // tableau des cases du ruban
@@ -106,4 +123,4 @@ public class Ruban extends JPanel{
             tabLab[i].setText("" + tabChar[i]);
         }
     }*/
-}  
+}
