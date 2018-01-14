@@ -22,6 +22,17 @@ public class ModTuring {
         this.ruban = new Character[0];
         this.posTete = 0;
     }
+    
+    public void iniRuban(Character[] pruban) {
+        this.arret = false;
+        this.etatCourant = 0;
+        this.ruban = pruban;
+        this.posTete = 0;
+    }
+    
+    public void iniRegles (ArrayList<TuRegle> tabR){
+        this.tabRegles = tabR;
+    }    
 
     public Character rubanPos(int pos) {
         return this.ruban[pos];
@@ -114,6 +125,19 @@ public class ModTuring {
         
         return wentWell;
     }
+    
+    public void faireUnPas(){
+        if (!this.arret){
+            this.arret=appliquer();
+        }
+    }
+    
+    public void deroulerTresVite(){
+        while(!this.arret){
+            faireUnPas();
+        }
+    }
+    
     
     
 
