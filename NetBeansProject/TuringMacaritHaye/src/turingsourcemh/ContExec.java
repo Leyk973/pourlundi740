@@ -51,8 +51,9 @@ public class ContExec extends JPanel {
       }
     }
     
-    public ContExec(){
+    public ContExec(ModTuring mod){
         super(null);
+        this.modele = mod;
         //création éléments
         this.btnStart = new JButton("Démarrer");
         this.btnStop = new JButton("Stopper");

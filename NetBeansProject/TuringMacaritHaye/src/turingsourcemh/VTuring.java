@@ -57,7 +57,7 @@ public class VTuring extends JFrame {
         pnlRule.setLocation(0, 0);
         pnlRule.setBorder(BorderFactory.createTitledBorder("Règles"));
 
-        ContExec pnlExec = new ContExec();
+        ContExec pnlExec = new ContExec(machine);
         pnlExec.setSize(360, 210);
         pnlExec.setLocation(0, 290);
         pnlExec.setBorder(BorderFactory.createTitledBorder("Exécution"));
