@@ -29,6 +29,8 @@ public class ModTuring extends Observable{
         this.etatCourant = 0;
         this.ruban = pruban;
         this.posTete = 0;
+        setChanged();
+        notifyObservers(rubanParsed());
     }
     
     public void iniRegles (ArrayList<TuRegle> tabR){

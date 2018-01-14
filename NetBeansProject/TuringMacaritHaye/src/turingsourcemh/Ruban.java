@@ -10,8 +10,6 @@ import java.awt.Graphics;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
 public class Ruban extends JPanel implements Observer {
 
@@ -84,9 +82,8 @@ public class Ruban extends JPanel implements Observer {
     */
 
     public void update(Observable o, Object arg) {
-        if ((o instanceof ModTuring) && (arg instanceof String)) {
-            String newRubS = (String) arg;
-            char[] newRub = newRubS.toCharArray();
+        if ((o instanceof ModTuring) && (arg instanceof char[])) {
+            char[] newRub = (char[])arg;
             for (int i = 0; i < nbC; ++i) {
                 dispRub[i] = newRub[i];
             }

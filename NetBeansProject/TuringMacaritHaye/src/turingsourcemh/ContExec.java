@@ -19,37 +19,12 @@ import javax.swing.JTextField;
 public class ContExec extends JPanel {
     
     private ModTuring modele;
-    
     private JButton btnInit;
     private JButton btnStep;
     private JButton btnStart;
     private JButton btnStop;
     private JLabel lblInit;
     private JTextField txtRubanIni;
-    
-    class StartListener implements ActionListener {
-      public void actionPerformed(ActionEvent evt) {
-          
-      }
-    }
-    
-    class StopListener implements ActionListener {
-      public void actionPerformed(ActionEvent evt) {
-          
-      }
-    }
-    
-    class StepListener implements ActionListener {
-      public void actionPerformed(ActionEvent evt) {
-          
-      }
-    }
-    
-    class InitListener implements ActionListener {
-      public void actionPerformed(ActionEvent evt) {
-          
-      }
-    }
     
     public ContExec(ModTuring mod){
         super(null);
@@ -63,7 +38,21 @@ public class ContExec extends JPanel {
         this.btnInit = new JButton("Initialiser");
         
         //action listeners
+        btnInit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                char[] tChar = txtRubanIni.getText().toCharArray();
+                Character[] tCharMod = new Character[tChar.length];
+                for (int i=0;i<tChar.length;++i)
+                    tCharMod[i] = new Character(tChar[i]);
+                modele.iniRuban(tCharMod);
+            }
+        });
         
+        btnStep.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
         
         //placement éléments
         lblInit.setSize(80, 30);

@@ -42,7 +42,7 @@ public class VTuring extends JFrame {
         */
         
         Ruban ruban = new Ruban();
-
+        
         //modele.addObserver(txtRulesList);
         //modele.addObserver(ruban);
         
@@ -50,6 +50,8 @@ public class VTuring extends JFrame {
         ModTuring machine = new ModTuring();
         //pnlRule.setModel(machine);
         //pnlExec.setModel(machine);
+        
+        machine.addObserver(ruban);
         
         //préparation panels
         ContRegles pnlRule = new ContRegles(machine);
