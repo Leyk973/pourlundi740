@@ -2,6 +2,13 @@ package turingsourcemh;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -84,6 +91,24 @@ public class ContRegles extends JPanel {
                             "Problème d'édition de la règle.",
                             "Erreur",
                             JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                File fichierPersistant = new File(".listeregles");
+
+                // sauvegarder la couleur actuelle dans le fichier .choixcouleur
+                try {
+                    FileOutputStream fos = new FileOutputStream(fichierPersistant);
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(txtRulesList.getText());
+                    oos.close();                    
+                } catch (FileNotFoundException ex) {
+                    //Logger.getLogger(ChoixCouleur.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    //Logger.getLogger(ChoixCouleur.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
