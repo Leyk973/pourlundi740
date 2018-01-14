@@ -45,7 +45,7 @@ public class Ruban extends JPanel implements Observer {
     }
 
     public void paint(Graphics g) {
-        //super.paint(g);
+        super.paintComponent(g);
         if (fait == false) {
             int bor = 30;
             int dim = 20;
