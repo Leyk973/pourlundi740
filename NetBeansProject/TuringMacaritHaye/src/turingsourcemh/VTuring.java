@@ -43,6 +43,7 @@ public class VTuring extends JFrame {
 
         //modele.addObserver(txtRulesList);
         //modele.addObserver(ruban);
+        
         //préparation panels
         JPanel pnlRule = new JPanel(null);
         pnlRule.setSize(360, 280);
