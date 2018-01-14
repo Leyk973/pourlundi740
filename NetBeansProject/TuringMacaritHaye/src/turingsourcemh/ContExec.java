@@ -50,6 +50,18 @@ public class ContExec extends JPanel {
         
         btnStep.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                modele.faireUnPas();
+            }
+        });
+        
+        btnStart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                modele.deroulerTresVite();
+            }
+        });
+        
+        btnStop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 
             }
         });
