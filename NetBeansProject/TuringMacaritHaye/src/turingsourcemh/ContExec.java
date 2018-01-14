@@ -5,10 +5,61 @@
  */
 package turingsourcemh;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Jean-Loup
  */
-public class contExec {
+public class ContExec extends JPanel {
     
+    private ModTuring modele;
+    
+    private JButton btnInit;
+    private JButton btnStep;
+    private JButton btnStart;
+    private JButton btnStop;
+    private JLabel lblInit;
+    private JTextField txtRubanIni;
+    
+    public ContExec(){
+        super(null);
+        this.btnStart = new JButton("Démarrer");
+        this.btnStop = new JButton("Stopper");
+        this.lblInit = new JLabel("Ruban initial:");
+        this.txtRubanIni = new JTextField();
+        this.btnStep = new JButton("Faire un pas");
+        this.btnInit = new JButton("Initialiser");
+        
+        lblInit.setSize(80, 30);
+        lblInit.setLocation(70, 30);
+        this.add(lblInit);
+
+        txtRubanIni.setSize(100, 30);
+        txtRubanIni.setLocation(180, 30);
+        this.add(txtRubanIni);
+
+        btnInit.setSize(120, 30);
+        btnInit.setLocation(30, 90);
+        this.add(btnInit);
+
+        btnStep.setSize(120, 30);
+        btnStep.setLocation(210, 90);
+        this.add(btnStep);
+
+        btnStart.setSize(120, 30);
+        btnStart.setLocation(30, 150);
+        this.add(btnStart);
+
+        btnStop.setSize(120, 30);
+        btnStop.setLocation(210, 150);
+        this.add(btnStop);
+    }
+    
+    public void setModel (ModTuring m){
+        this.modele=m;
+    }
 }
