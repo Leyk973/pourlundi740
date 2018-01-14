@@ -46,8 +46,13 @@ public class VTuring extends JFrame {
         //modele.addObserver(txtRulesList);
         //modele.addObserver(ruban);
         
+        //Ajout du modele
+        ModTuring machine = new ModTuring();
+        //pnlRule.setModel(machine);
+        //pnlExec.setModel(machine);
+        
         //préparation panels
-        ContRegles pnlRule = new ContRegles();
+        ContRegles pnlRule = new ContRegles(machine);
         pnlRule.setSize(360, 280);
         pnlRule.setLocation(0, 0);
         pnlRule.setBorder(BorderFactory.createTitledBorder("Règles"));
@@ -64,7 +69,7 @@ public class VTuring extends JFrame {
         pnlRuban.setBorder(BorderFactory.createTitledBorder("Ruban"));
 
         JPanel pnlMain = new JPanel(null);
-
+        
         /*
         //insertion panel règles
         btnCharge.setSize(120, 30);

@@ -20,7 +20,7 @@ public class ContRegles extends JPanel {
     private JButton btnSave;
     private JButton btnAdd;
     //textfields
-    private JTextField txtRule;
+    private JTextField txtRule1;
     private JTextField txtRule2;
     private JTextArea txtRulesList;
     //label
@@ -28,14 +28,15 @@ public class ContRegles extends JPanel {
     //scroll
     private JScrollPane scroll;
     
-    public ContRegles() {
+    public ContRegles(ModTuring mod) {
         super(null);
-        JButton btnCharge = new JButton("Charger");
-        JButton btnSave = new JButton("Sauvegarder");
-        JButton btnAdd = new JButton("Ajouter");
-        JTextField txtRule1 = new JTextField();
-        JTextField txtRule2 = new JTextField();
-        JTextArea txtRulesList = new JTextArea();
+        this.modele = mod;
+        btnCharge = new JButton("Charger");
+        btnSave = new JButton("Sauvegarder");
+        btnAdd = new JButton("Ajouter");
+        txtRule1 = new JTextField();
+        txtRule2 = new JTextField();
+        txtRulesList = new JTextArea();
         lblArrow = new JLabel("=>", SwingConstants.CENTER);
         txtRulesList.setEditable(false);
         scroll = new JScrollPane(txtRulesList);
@@ -87,7 +88,7 @@ public class ContRegles extends JPanel {
 
     // creer une TuRegle a partir des textFields
     public TuRegle ruleFromTF() {
-        String s1 = txtRule.getText();
+        String s1 = txtRule1.getText();
         String s2 = txtRule2.getText();
         String[] ecsl = s1.split(",");
         String[] essedi = s2.split(",");
@@ -113,7 +114,7 @@ public class ContRegles extends JPanel {
     }
     
     public String stringFromTF() {
-        String s1 = txtRule.getText();
+        String s1 = txtRule1.getText();
         String s2 = txtRule2.getText();
         String regleAff = "(" + s1 + ") => (" + s2 + ")";        
         return regleAff;
