@@ -76,6 +76,7 @@ public class ContRegles extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     modele.ajoutTuRegle(ruleFromTF());
+                    modele.affReglesConsole();
                     txtRulesList.setEditable(true);
                     txtRulesList.append(stringFromTF() + "\n");
                     txtRulesList.setEditable(false);
@@ -131,6 +132,30 @@ public class ContRegles extends JPanel {
 
         return dir;
     }
+    
+        public String recupDirectionString(String[] tabS) {
+        String res;
+        String dirS;
+
+        try {
+            dirS = tabS[2];
+            switch (dirS) {
+                case (">"):
+                    res = dirS;
+                    break;
+                case ("<"):
+                    res = dirS;
+                    break;
+                default: // si vide ou autre
+                    res = "";
+                    break;
+            }
+        } catch (IndexOutOfBoundsException ioobe) {
+            res = "";
+        }
+
+        return res;
+    }
 
     // creer une TuRegle a partir des textFields
     public TuRegle ruleFromTF() {
@@ -149,10 +174,27 @@ public class ContRegles extends JPanel {
         return regle;
     }
 
+    public String dirPourAff(String dir){
+        String res;
+        switch(dir){
+            case("<"):
+                res = dir;
+                break;
+            case(">"):
+                res = dir;
+                break;
+            default:
+                res="";
+                break;
+        }
+        return res;
+    }
+    
+    
     public String stringFromTF() {
         String s1 = txtRule1.getText();
-        String s2 = txtRule2.getText();
-        String regleAff = "(" + s1 + ") => (" + s2 + ")";
+        String[] s2 = txtRule2.getText().split(",");
+        String regleAff = "(" + s1 + ") => (" + s2[0] + "," + recupSymbole(s2) + "," + recupDirectionString(s2) + ")";
         return regleAff;
     }
 

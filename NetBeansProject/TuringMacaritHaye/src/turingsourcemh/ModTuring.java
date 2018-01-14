@@ -173,7 +173,12 @@ public class ModTuring extends Observable{
         }
     }
     
-    
+    // affichage des regles
+    public void affReglesConsole(){
+        for(TuRegle r : tabRegles){
+            System.out.println(r);
+        }
+    }
     
 
     // verifier quand on lit que la case est definie, si elle ne l'est pas, 

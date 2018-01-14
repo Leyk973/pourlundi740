@@ -50,6 +50,12 @@ public class TuRegle implements Serializable, Cloneable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+    
+    public String toString(){
+        String res;
+        res = "["+Integer.toString(ec)+","+sl+"=>"+Integer.toString(es)+","+se+","+di.toString()+"]";
+        return res;
+    }
 
     
 }
