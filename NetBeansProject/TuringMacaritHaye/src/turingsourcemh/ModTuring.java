@@ -53,6 +53,10 @@ public class ModTuring extends Observable{
         this.tabRegles.add(r);
     }
 
+    public void ajoutTuRegle(TuRegle r) {
+        this.tabRegles.add(r);
+    }    
+    
     // retirer regle
     public void retraitTuRegle(int pos) {
         this.tabRegles.remove(pos);
