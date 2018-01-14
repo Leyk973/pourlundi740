@@ -79,11 +79,14 @@ public class ModTuring extends Observable{
     //retourne l'indice de la regle dans la collection
     //retourne -1 si pas de regle correspondante
     public int trouveRegle() {
+        System.out.println("hello");
         boolean e = false; // voir si regle existe
         int i = -1;
-        while (!e && i<tabRegles.size()-1) {
+        while ((!e) && (i<tabRegles.size()-1)) {
             ++i;
             e = this.tabRegles.get(i).verif(this.etatCourant, lireSymb());
+            
+            System.out.println("i:"+i+"/"+Integer.toString(tabRegles.size()-1));
         }
         if (e) {
             return i;
@@ -96,6 +99,7 @@ public class ModTuring extends Observable{
     public void ecrireRuban(int pos, Character sym) {
         try {
             this.ruban[pos] = sym;
+            System.out.println("j'écris : "+sym);
         } catch (IndexOutOfBoundsException e) {
             // nothing
         }
@@ -118,19 +122,19 @@ public class ModTuring extends Observable{
 
     //appliquer une regle
     public boolean appliquer() {
-        boolean wentWell = true;
+        boolean stopit = false;
         int indRegle = trouveRegle();
-
+        System.out.println("indice regle : "+indRegle);
         if (indRegle != -1) {
             TuRegle regle = this.tabRegles.get(indRegle);
             this.etatCourant = regle.etatSuiv();
             ecrireRuban(this.posTete, regle.symbEcrit());
             updatePosTete(regle.dirTete());
         } else {
-            wentWell = false;
+            stopit = true;
         }
 
-        return wentWell;
+        return stopit;
     }
 
     /*
@@ -159,8 +163,12 @@ public class ModTuring extends Observable{
     }
 
     public void faireUnPas() {
+        if(this.tabRegles.isEmpty()){
+            this.arret=true;
+        }
         if (!this.arret) {
             this.arret = appliquer();
+            System.out.println(ruban[0]);
             setChanged();
             notifyObservers(rubanParsed());
         }
@@ -173,7 +181,12 @@ public class ModTuring extends Observable{
         }
     }
     
-    
+    // affichage des regles
+    public void affReglesConsole(){
+        for(TuRegle r : tabRegles){
+            System.out.println(r);
+        }
+    }
     
 
     // verifier quand on lit que la case est definie, si elle ne l'est pas, 
