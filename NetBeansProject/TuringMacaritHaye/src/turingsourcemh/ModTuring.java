@@ -81,7 +81,7 @@ public class ModTuring extends Observable{
     public int trouveRegle() {
         boolean e = false; // voir si regle existe
         int i = -1;
-        while (!e) {
+        while (!e && i<tabRegles.size()-1) {
             ++i;
             e = this.tabRegles.get(i).verif(this.etatCourant, lireSymb());
         }
