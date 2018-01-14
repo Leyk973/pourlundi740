@@ -22,6 +22,7 @@ public class VTuring extends JFrame {
         super("Turing");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        /*
         //ModTuring modele = new ModTuring();
         JButton btnCharge = new JButton("Charger");
         JButton btnSave = new JButton("Sauvegarder");
@@ -38,7 +39,8 @@ public class VTuring extends JFrame {
         txtRulesList.setEditable(false);
         JScrollPane scroll = new JScrollPane(txtRulesList);
         JTextField txtRubanIni = new JTextField();
-
+        */
+        
         Ruban ruban = new Ruban();
 
         //modele.addObserver(txtRulesList);

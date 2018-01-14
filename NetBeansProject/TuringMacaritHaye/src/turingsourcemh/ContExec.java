@@ -5,6 +5,8 @@
  */
 package turingsourcemh;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,8 +27,33 @@ public class ContExec extends JPanel {
     private JLabel lblInit;
     private JTextField txtRubanIni;
     
+    class StartListener implements ActionListener {
+      public void actionPerformed(ActionEvent evt) {
+          
+      }
+    }
+    
+    class StopListener implements ActionListener {
+      public void actionPerformed(ActionEvent evt) {
+          
+      }
+    }
+    
+    class StepListener implements ActionListener {
+      public void actionPerformed(ActionEvent evt) {
+          
+      }
+    }
+    
+    class InitListener implements ActionListener {
+      public void actionPerformed(ActionEvent evt) {
+          
+      }
+    }
+    
     public ContExec(){
         super(null);
+        //création éléments
         this.btnStart = new JButton("Démarrer");
         this.btnStop = new JButton("Stopper");
         this.lblInit = new JLabel("Ruban initial:");
@@ -34,6 +61,10 @@ public class ContExec extends JPanel {
         this.btnStep = new JButton("Faire un pas");
         this.btnInit = new JButton("Initialiser");
         
+        //action listeners
+        
+        
+        //placement éléments
         lblInit.setSize(80, 30);
         lblInit.setLocation(70, 30);
         this.add(lblInit);
