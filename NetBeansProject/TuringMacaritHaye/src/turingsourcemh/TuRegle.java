@@ -47,4 +47,9 @@ public class TuRegle implements Serializable, Cloneable {
         return this.di;
     }
 
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    
 }
