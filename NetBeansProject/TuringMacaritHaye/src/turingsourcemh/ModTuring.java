@@ -151,6 +151,10 @@ public class ModTuring extends Observable{
                 rub[i] = Character.MIN_VALUE; //caractere vide, mais quand meme caractere, a la difference de null
             }
         }
+        for (int i = 0; i < limit; ++i){
+            System.out.println(rub[i]);
+        }
+        
         return rub;
     }
 

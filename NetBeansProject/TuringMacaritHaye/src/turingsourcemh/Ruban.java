@@ -61,7 +61,7 @@ public class Ruban extends JPanel implements Observer {
 
             for (int i = 0; i < nbC; ++i) {
                 g.drawLine(bor + dim * i, bor, bor + dim * i, bor + dim);
-                g.drawString(Integer.toString(dispRub[i]), (bor + dim * i) + 7, (bor + dim / 2) + 6);
+                g.drawString(Character.toString(dispRub[i]), (bor + dim * i) + 7, (bor + dim / 2) + 6);
             }
             g.drawLine(bor + dim * nbC, bor, bor + dim * nbC, bor + dim);
 
@@ -86,6 +86,7 @@ public class Ruban extends JPanel implements Observer {
             char[] newRub = (char[])arg;
             for (int i = 0; i < nbC; ++i) {
                 dispRub[i] = newRub[i];
+                //System.out.println(dispRub[i]);
             }
             fait = false;
             this.repaint();
