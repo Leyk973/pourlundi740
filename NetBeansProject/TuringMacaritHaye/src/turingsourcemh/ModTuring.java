@@ -87,56 +87,72 @@ public class ModTuring extends Observable{
     }
 
     //ecrire dans le ruban
-    public void ecrireRuban (int pos, Character sym){
-        try{
+    public void ecrireRuban(int pos, Character sym) {
+        try {
             this.ruban[pos] = sym;
-        } catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             // nothing
         }
-    }    
-    
+    }
+
     //bouger la tete de lecture
-    public void updatePosTete (Direction dir){
-        switch (dir){
-            case dr :
+    public void updatePosTete(Direction dir) {
+        switch (dir) {
+            case dr:
                 ++this.posTete;
                 break;
-            case ga :
+            case ga:
                 --this.posTete;
                 break;
-            case pm :
+            case pm:
                 //nothing
                 break;
         }
     }
-    
+
     //appliquer une regle
     public boolean appliquer() {
         boolean wentWell = true;
         int indRegle = trouveRegle();
-        
-        if (indRegle != -1){
+
+        if (indRegle != -1) {
             TuRegle regle = this.tabRegles.get(indRegle);
             this.etatCourant = regle.etatSuiv();
             ecrireRuban(this.posTete, regle.symbEcrit());
-            updatePosTete (regle.dirTete());
+            updatePosTete(regle.dirTete());
         } else {
             wentWell = false;
-        }     
-        
+        }
+
         return wentWell;
     }
-    
-    public String rubanToString(){
+
+    /*
+    public String rubanToString() {
         String rub = ruban.toString();
         return rub;
     }
-    
-    public void faireUnPas(){
-        if (!this.arret){
-            this.arret=appliquer();
+    */
+
+    // donne une chaine de 9 caracteres centree sur la tete de lecture
+    public char[] rubanParsed() {
+        int limit = 9;
+        char[] rub = new char[9];
+        for (int i = 0; i < limit; ++i) {
+            try {
+                rub[i] = ruban[posTete-4+i];
+            } catch (IndexOutOfBoundsException e) {
+                rub[i] = Character.MIN_VALUE; //caractere vide, mais quand meme caractere, a la difference de null
+            }
+        }
+        return rub;
+    }
+
+    public void faireUnPas() {
+        if (!this.arret) {
+            this.arret = appliquer();
             setChanged();
-            notifyObservers(rubanToString());
+            notifyObservers(rubanParsed());
         }
         
     }
