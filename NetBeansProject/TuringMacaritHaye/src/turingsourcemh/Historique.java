@@ -38,6 +38,7 @@ public class Historique extends JPanel implements Observer {
         if((modele.demarree())){
             txtHist.append("Règle : "+modele.derniereRegle()+"\nRuban "+modele.stringRuban()+"\n");
         } else {
+            txtHist.setText("");
             txtHist.append("Ruban "+modele.stringRuban()+"\n");            
         }
         
