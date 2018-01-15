@@ -11,13 +11,16 @@ import java.util.Observable;
 public class ModTuring extends Observable{
 
     private boolean arret;
+    private boolean demar;
     private ArrayList<TuRegle> tabRegles;
     private int etatCourant;
     private Character[] ruban;
     private int posTete; //position de la tete de lecture
+    private TuRegle lastRuleUsed;
 
     public ModTuring() {
         this.arret = false;
+        this.demar = false;
         this.etatCourant = 0;
         this.tabRegles = new ArrayList<>();
         this.ruban = new Character[0];
@@ -26,11 +29,15 @@ public class ModTuring extends Observable{
     
     public void iniRuban(Character[] pruban) {
         this.arret = false;
+        this.demar = false;
         this.etatCourant = 0;
         this.ruban = pruban;
         this.posTete = 0;
         setChanged();
         notifyObservers(rubanParsed());
+        // DEBUG
+            System.out.println(this.stringRuban());
+            System.out.println("ruban : "+this.ruban[0]);
     }
     
     public void iniRegles (ArrayList<TuRegle> tabR){
@@ -41,6 +48,22 @@ public class ModTuring extends Observable{
         this.tabRegles.clear();
     }
 
+    public String stringRuban(){
+        String sRub = "";
+        for(int i = 0; i<ruban.length;++i){
+            sRub += ruban[i];
+        }
+        return sRub;
+    }
+    
+    public Character[] getRuban(){
+        return this.ruban;
+    }
+    
+    public TuRegle derniereRegle(){
+        return this.lastRuleUsed;
+    }
+    
     public Character rubanPos(int pos) {
         return this.ruban[pos];
     }
@@ -51,6 +74,10 @@ public class ModTuring extends Observable{
 
     public boolean arretee(){
         return this.arret;
+    }
+    
+    public boolean demarree (){
+        return this.demar;
     }
     
     // ajout regle
@@ -131,6 +158,7 @@ public class ModTuring extends Observable{
         System.out.println("indice regle : "+indRegle);
         if (indRegle != -1) {
             TuRegle regle = this.tabRegles.get(indRegle);
+            this.lastRuleUsed = regle;
             this.etatCourant = regle.etatSuiv();
             ecrireRuban(this.posTete, regle.symbEcrit());
             updatePosTete(regle.dirTete());
@@ -168,13 +196,21 @@ public class ModTuring extends Observable{
 
     public void faireUnPas() {
         if(this.tabRegles.isEmpty()){
+            System.out.println("TABLE VIDE");
             this.arret=true;
         }
         if (!this.arret) {
+            if(this.demar == false){
+                this.demar = true;
+            }
             this.arret = appliquer();
             System.out.println(ruban[0]);
             setChanged();
             notifyObservers(rubanParsed());
+            
+// DEBUG
+            System.out.println("StringRuban : "+this.stringRuban());
+            System.out.println("ruban : "+this.ruban);
         }
         
     }

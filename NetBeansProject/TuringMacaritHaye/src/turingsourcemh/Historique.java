@@ -35,12 +35,11 @@ public class Historique extends JPanel implements Observer {
     
     @Override
     public void update(Observable o, Object arg) {
-        if ((o instanceof ModTuring) && (arg instanceof String)) {
-            txtHist.append((String)arg);
-            if((String)arg != "")
-            {
-                txtHist.append("\n");
-            }
+        if((modele.demarree())){
+            txtHist.append("Règle : "+modele.derniereRegle()+"\nRuban "+modele.stringRuban()+"\n");
+        } else {
+            txtHist.append("Ruban "+modele.stringRuban()+"\n");            
         }
+        
     }
 }
