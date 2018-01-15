@@ -51,8 +51,6 @@ public class VTuring extends JFrame {
         //pnlRule.setModel(machine);
         //pnlExec.setModel(machine);
         
-        machine.addObserver(ruban);
-        
         //préparation panels
         ContRegles pnlRule = new ContRegles(machine);
         pnlRule.setSize(360, 280);
@@ -70,7 +68,15 @@ public class VTuring extends JFrame {
         pnlRuban.setLocation(0, 510);
         pnlRuban.setBorder(BorderFactory.createTitledBorder("Ruban"));
 
+        ContHist pnlHist = new ContHist(machine);
+        pnlHist.setSize(360,600);
+        pnlHist.setLocation(370,0);
+        pnlHist.setBorder(BorderFactory.createTitledBorder("Historique"));
+
         JPanel pnlMain = new JPanel(null);
+        
+        machine.addObserver(ruban);
+        machine.addObserver(pnlHist);
         
         /*
         //insertion panel règles
@@ -135,11 +141,12 @@ public class VTuring extends JFrame {
         pnlMain.add(pnlRule);
         pnlMain.add(pnlExec);
         pnlMain.add(pnlRuban);
+        pnlMain.add(pnlHist);
 
         this.getContentPane().add(pnlMain);
         this.pack();
         this.setVisible(true);
-        this.setSize(360, 650);
+        this.setSize(740, 640);
         this.setResizable(false);
     }
 
