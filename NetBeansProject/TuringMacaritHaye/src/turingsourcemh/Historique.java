@@ -15,13 +15,13 @@ import javax.swing.JTextArea;
  *
  * @author Arthur
  */
-public class ContHist extends JPanel implements Observer {
+public class Historique extends JPanel implements Observer {
     
     private ModTuring modele;
     private JTextArea txtHist;
     private JScrollPane scroll;
     
-    public ContHist(ModTuring mod){
+    public Historique(ModTuring mod){
         super(null);
         this.modele = mod;
         txtHist = new JTextArea();

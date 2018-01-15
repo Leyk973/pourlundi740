@@ -68,7 +68,7 @@ public class VTuring extends JFrame {
         pnlRuban.setLocation(0, 510);
         pnlRuban.setBorder(BorderFactory.createTitledBorder("Ruban"));
 
-        ContHist pnlHist = new ContHist(machine);
+        Historique pnlHist = new Historique(machine);
         pnlHist.setSize(360,600);
         pnlHist.setLocation(370,0);
         pnlHist.setBorder(BorderFactory.createTitledBorder("Historique"));

@@ -62,9 +62,9 @@ public class ContRegles extends JPanel {
         btnAdd.setSize(120, 30);
         btnAdd.setLocation(30, 75);
         this.add(btnAdd);
-        
-        btnDel.setSize(120,30);
-        btnDel.setLocation(30,105);
+
+        btnDel.setSize(120, 30);
+        btnDel.setLocation(30, 105);
         this.add(btnDel);
 
         txtRule1.setSize(60, 30);
@@ -101,7 +101,7 @@ public class ContRegles extends JPanel {
                 }
             }
         });
-        
+
         // supprimer dernière regle
         btnDel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -133,11 +133,19 @@ public class ContRegles extends JPanel {
 
     public void delLastRule() {
         String[] rules = txtRulesList.getText().split("\n");
-        txtRulesList.setText("");
-        for (int i = 0; i < rules.length - 1; ++i) {
-            txtRulesList.append(rules[i] + "\n");
+        try {
+            txtRulesList.setText("");
+            for (int i = 0; i < rules.length - 1; ++i) {
+                txtRulesList.append(rules[i] + "\n");
+            }
+            modele.retraitTuRegle(rules.length - 1);
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(null,
+                    "Impossible de supprimer la règle, vérifiez qu'il en reste une.",
+                    "Erreur",
+                    JOptionPane.WARNING_MESSAGE);
         }
-        modele.retraitTuRegle(rules.length - 1);
+
     }
 
     public void chargeInList() {
