@@ -8,7 +8,7 @@ import java.util.Observable;
  *
  * @author Jean-Loup
  */
-public class ModTuring extends Observable{
+public class ModTuring extends Observable {
 
     private boolean arret;
     private boolean demar;
@@ -26,7 +26,7 @@ public class ModTuring extends Observable{
         this.ruban = new Character[0];
         this.posTete = 0;
     }
-    
+
     public void iniRuban(Character[] pruban) {
         this.arret = false;
         this.demar = false;
@@ -36,34 +36,34 @@ public class ModTuring extends Observable{
         setChanged();
         notifyObservers(rubanParsed());
         // DEBUG
-            System.out.println(this.stringRuban());
-            System.out.println("ruban : "+this.ruban[0]);
+        System.out.println(this.stringRuban());
+        System.out.println("ruban : " + this.ruban[0]);
     }
-    
-    public void iniRegles (ArrayList<TuRegle> tabR){
+
+    public void iniRegles(ArrayList<TuRegle> tabR) {
         this.tabRegles = tabR;
     }
-    
-    public void viderListeRegles(){
+
+    public void viderListeRegles() {
         this.tabRegles.clear();
     }
 
-    public String stringRuban(){
+    public String stringRuban() {
         String sRub = "";
-        for(int i = 0; i<ruban.length;++i){
+        for (int i = 0; i < ruban.length; ++i) {
             sRub += ruban[i];
         }
         return sRub;
     }
-    
-    public Character[] getRuban(){
+
+    public Character[] getRuban() {
         return this.ruban;
     }
-    
-    public TuRegle derniereRegle(){
+
+    public TuRegle derniereRegle() {
         return this.lastRuleUsed;
     }
-    
+
     public Character rubanPos(int pos) {
         return this.ruban[pos];
     }
@@ -72,14 +72,14 @@ public class ModTuring extends Observable{
         return this.posTete;
     }
 
-    public boolean arretee(){
+    public boolean arretee() {
         return this.arret;
     }
-    
-    public boolean demarree (){
+
+    public boolean demarree() {
         return this.demar;
     }
-    
+
     // ajout regle
     public void ajoutTuRegle(int ec, Character sl, int es, Character se, Direction di) {
         TuRegle r = new TuRegle(ec, sl, es, se, di);
@@ -88,8 +88,8 @@ public class ModTuring extends Observable{
 
     public void ajoutTuRegle(TuRegle r) {
         this.tabRegles.add(r);
-    }    
-    
+    }
+
     // retirer regle
     public void retraitTuRegle(int pos) {
         this.tabRegles.remove(pos);
@@ -113,11 +113,11 @@ public class ModTuring extends Observable{
         System.out.println("hello");
         boolean e = false; // voir si regle existe
         int i = -1;
-        while ((!e) && (i<tabRegles.size()-1)) {
+        while ((!e) && (i < tabRegles.size() - 1)) {
             ++i;
             e = this.tabRegles.get(i).verif(this.etatCourant, lireSymb());
-            
-            System.out.println("i:"+i+"/"+Integer.toString(tabRegles.size()-1));
+
+            System.out.println("i:" + i + "/" + Integer.toString(tabRegles.size() - 1));
         }
         if (e) {
             return i;
@@ -130,7 +130,7 @@ public class ModTuring extends Observable{
     public void ecrireRuban(int pos, Character sym) {
         try {
             this.ruban[pos] = sym;
-            System.out.println("j'écris : "+sym);
+            System.out.println("j'écris : " + sym);
         } catch (IndexOutOfBoundsException e) {
             // nothing
         }
@@ -155,7 +155,7 @@ public class ModTuring extends Observable{
     public boolean appliquer() {
         boolean stopit = false;
         int indRegle = trouveRegle();
-        System.out.println("indice regle : "+indRegle);
+        System.out.println("indice regle : " + indRegle);
         if (indRegle != -1) {
             TuRegle regle = this.tabRegles.get(indRegle);
             this.lastRuleUsed = regle;
@@ -174,60 +174,60 @@ public class ModTuring extends Observable{
         String rub = ruban.toString();
         return rub;
     }
-    */
-
+     */
     // donne une chaine de 9 caracteres centree sur la tete de lecture
     public char[] rubanParsed() {
         int limit = 9;
         char[] rub = new char[9];
         for (int i = 0; i < limit; ++i) {
             try {
-                rub[i] = ruban[posTete-4+i];
+                rub[i] = ruban[posTete - 4 + i];
             } catch (IndexOutOfBoundsException e) {
                 rub[i] = Character.MIN_VALUE; //caractere vide, mais quand meme caractere, a la difference de null
             }
         }
-        for (int i = 0; i < limit; ++i){
+        for (int i = 0; i < limit; ++i) {
             System.out.println(rub[i]);
         }
-        
+
         return rub;
     }
 
     public void faireUnPas() {
-        if(this.tabRegles.isEmpty()){
+        if (this.tabRegles.isEmpty()) {
             System.out.println("TABLE VIDE");
-            this.arret=true;
+            this.arret = true;
         }
         if (!this.arret) {
-            if(this.demar == false){
+            if (this.demar == false) {
                 this.demar = true;
             }
             this.arret = appliquer();
             System.out.println(ruban[0]);
-            setChanged();
-            notifyObservers(rubanParsed());
-            
+            if (!(this.arretee())) {
+                setChanged();
+                notifyObservers(rubanParsed());
+            }
+
 // DEBUG
-            System.out.println("StringRuban : "+this.stringRuban());
-            System.out.println("ruban : "+this.ruban);
+            System.out.println("StringRuban : " + this.stringRuban());
+            System.out.println("ruban : " + this.ruban);
         }
-        
+
     }
-    
-    public void deroulerTresVite(){
-        while(!this.arret){
+
+    public void deroulerTresVite() {
+        while (!this.arret) {
             faireUnPas();
         }
     }
-    
+
     // affichage des regles
-    public void affReglesConsole(){
-        for(TuRegle r : tabRegles){
+    public void affReglesConsole() {
+        for (TuRegle r : tabRegles) {
             System.out.println(r);
         }
     }
-    
 
     // verifier quand on lit que la case est definie, si elle ne l'est pas, 
     // faire comme si c'était une case vide (particulierement vrai pour indices negatifs
