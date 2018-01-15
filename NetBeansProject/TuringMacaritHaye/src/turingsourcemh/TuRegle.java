@@ -59,7 +59,7 @@ public class TuRegle implements Serializable, Cloneable {
     
     public String toString(){
         String res;
-        res = "["+Integer.toString(ec)+","+sl+"=>"+Integer.toString(es)+","+se+","+di.toString()+"]";
+        res = "("+Integer.toString(ec)+","+sl+"=>"+Integer.toString(es)+","+se+","+di.toString()+")";
         return res;
     }
 

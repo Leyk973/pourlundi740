@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -17,7 +18,7 @@ import javax.swing.JTextField;
  * @author Jean-Loup
  */
 public class ContExec extends JPanel {
-    
+
     private ModTuring modele;
     private JButton btnInit;
     private JButton btnStep;
@@ -25,8 +26,8 @@ public class ContExec extends JPanel {
     private JButton btnStop;
     private JLabel lblInit;
     private JTextField txtRubanIni;
-    
-    public ContExec(ModTuring mod){
+
+    public ContExec(ModTuring mod) {
         super(null);
         this.modele = mod;
         //création éléments
@@ -36,36 +37,51 @@ public class ContExec extends JPanel {
         this.txtRubanIni = new JTextField();
         this.btnStep = new JButton("Faire un pas");
         this.btnInit = new JButton("Initialiser");
-        
+
         //action listeners
         btnInit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 char[] tChar = txtRubanIni.getText().toCharArray();
                 Character[] tCharMod = new Character[tChar.length];
-                for (int i=0;i<tChar.length;++i)
+                for (int i = 0; i < tChar.length; ++i) {
                     tCharMod[i] = new Character(tChar[i]);
+                }
                 modele.iniRuban(tCharMod);
             }
         });
-        
+
         btnStep.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                modele.faireUnPas();
+                if (modele.arretee()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Machine arrêtée",
+                            "Arrêt",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    modele.faireUnPas();
+                }
             }
         });
-        
+
         btnStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                modele.deroulerTresVite();
+                if (modele.arretee()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Machine arrêtée",
+                            "Arrêt",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    modele.deroulerTresVite();
+                }
             }
         });
-        
+
         btnStop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+
             }
         });
-        
+
         //placement éléments
         lblInit.setSize(80, 30);
         lblInit.setLocation(70, 30);
@@ -91,8 +107,8 @@ public class ContExec extends JPanel {
         btnStop.setLocation(210, 150);
         this.add(btnStop);
     }
-    
-    public void setModel (ModTuring m){
-        this.modele=m;
+
+    public void setModel(ModTuring m) {
+        this.modele = m;
     }
 }
