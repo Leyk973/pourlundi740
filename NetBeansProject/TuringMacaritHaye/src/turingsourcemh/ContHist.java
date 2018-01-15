@@ -33,10 +33,14 @@ public class ContHist extends JPanel implements Observer {
         this.add(scroll);
     }
     
-    
-    
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if ((o instanceof ModTuring) && (arg instanceof String)) {
+            txtHist.append((String)arg);
+            if((String)arg != "")
+            {
+                txtHist.append("\n");
+            }
+        }
     }
 }
