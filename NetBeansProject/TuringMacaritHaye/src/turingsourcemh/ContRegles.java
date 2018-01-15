@@ -2,6 +2,13 @@ package turingsourcemh;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +27,7 @@ public class ContRegles extends JPanel {
     private JButton btnCharge;
     private JButton btnSave;
     private JButton btnAdd;
+    private JButton btnDel;
     //textfields
     private JTextField txtRule1;
     private JTextField txtRule2;
@@ -35,6 +43,7 @@ public class ContRegles extends JPanel {
         btnCharge = new JButton("Charger");
         btnSave = new JButton("Sauvegarder");
         btnAdd = new JButton("Ajouter");
+        btnDel = new JButton("Supprimer");
         txtRule1 = new JTextField();
         txtRule2 = new JTextField();
         txtRulesList = new JTextArea();
@@ -51,8 +60,12 @@ public class ContRegles extends JPanel {
         this.add(btnSave);
 
         btnAdd.setSize(120, 30);
-        btnAdd.setLocation(30, 90);
+        btnAdd.setLocation(30, 75);
         this.add(btnAdd);
+        
+        btnDel.setSize(120,30);
+        btnDel.setLocation(30,105);
+        this.add(btnDel);
 
         txtRule1.setSize(60, 30);
         txtRule1.setLocation(180, 90);
@@ -88,7 +101,82 @@ public class ContRegles extends JPanel {
                 }
             }
         });
+        
+        // supprimer dernière regle
+        btnDel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                delLastRule();
+            }
+        });
 
+        btnCharge.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                chargeInList();
+            }
+        });
+
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                File fichierPersistant = new File(".listeregles");
+                try {
+                    FileOutputStream fos = new FileOutputStream(fichierPersistant);
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(txtRulesList.getText());
+                    oos.close();
+                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
+                }
+            }
+        });
+
+    }
+
+    public void delLastRule() {
+        String[] rules = txtRulesList.getText().split("\n");
+        txtRulesList.setText("");
+        for (int i = 0; i < rules.length - 1; ++i) {
+            txtRulesList.append(rules[i] + "\n");
+        }
+        modele.retraitTuRegle(rules.length - 1);
+    }
+
+    public void chargeInList() {
+        File fichierPersistant = new File(".listeregles");
+
+        if (fichierPersistant.exists()) {
+            try {
+                FileInputStream fis = new FileInputStream(fichierPersistant);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                txtRulesList.setText((String) ois.readObject());
+            } catch (FileNotFoundException ex) {
+            } catch (IOException ex) {
+            } catch (ClassNotFoundException ex) {
+            }
+        }
+    }
+
+    public void setRulesFromList() {
+        // suppression des regles
+        modele.viderListeRegles();
+        String[] sRegles = txtRulesList.getText().split("\n");
+        for (int i = 0; i < sRegles.length; ++i) {
+            String[] avap = sRegles[i].split("=>");
+
+            // suppression des parenthèes            
+            String sub1 = avap[0].substring(0, avap[0].lastIndexOf(")"));
+            String sub2 = avap[1].substring(0, avap[1].lastIndexOf(")"));
+
+            String[] ecsl = sub1.split(",");
+            String[] essedi = sub2.split(",");
+            int ec = Integer.parseInt(ecsl[0]);
+            Character sl = recupSymbole(ecsl);
+            int es = Integer.parseInt(essedi[0]);
+            Character se = recupSymbole(essedi);
+            Direction di = recupDirection(essedi);
+
+            TuRegle regle = new TuRegle(ec, sl, es, se, di);
+            modele.ajoutTuRegle(regle);
+        }
     }
 
     public void setModel(ModTuring m) {
@@ -132,8 +220,8 @@ public class ContRegles extends JPanel {
 
         return dir;
     }
-    
-        public String recupDirectionString(String[] tabS) {
+
+    public String recupDirectionString(String[] tabS) {
         String res;
         String dirS;
 
@@ -174,27 +262,26 @@ public class ContRegles extends JPanel {
         return regle;
     }
 
-    public String dirPourAff(String dir){
+    public String dirPourAff(String dir) {
         String res;
-        switch(dir){
-            case("<"):
+        switch (dir) {
+            case ("<"):
                 res = dir;
                 break;
-            case(">"):
+            case (">"):
                 res = dir;
                 break;
             default:
-                res="";
+                res = "";
                 break;
         }
         return res;
     }
-    
-    
+
     public String stringFromTF() {
         String s1 = txtRule1.getText();
         String[] s2 = txtRule2.getText().split(",");
-        String regleAff = "(" + s1 + ") => (" + s2[0] + "," + recupSymbole(s2) + "," + recupDirectionString(s2) + ")";
+        String regleAff = "(" + s1 + ")=>(" + s2[0] + "," + recupSymbole(s2) + "," + recupDirectionString(s2) + ")";
         return regleAff;
     }
 

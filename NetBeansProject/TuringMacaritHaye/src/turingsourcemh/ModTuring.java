@@ -35,7 +35,11 @@ public class ModTuring extends Observable{
     
     public void iniRegles (ArrayList<TuRegle> tabR){
         this.tabRegles = tabR;
-    }    
+    }
+    
+    public void viderListeRegles(){
+        this.tabRegles.clear();
+    }
 
     public Character rubanPos(int pos) {
         return this.ruban[pos];
