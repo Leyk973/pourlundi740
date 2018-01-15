@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -112,14 +113,32 @@ public class ContRegles extends JPanel {
         btnCharge.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 chargeInList();
+                setRulesFromList();
             }
         });
 
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                File fichierPersistant = new File(".listeregles");
+                saveFromList();
+            }
+        });
+    }
+    
+    public void saveFromList(){
+        File saveFile = null;
+        String path;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            saveFile = fileChooser.getSelectedFile();
+            System.out.println("Selected file: " + saveFile.getAbsolutePath());
+            
+            if(!saveFile.exists()){
+                path = saveFile.getAbsolutePath();
+                saveFile = new File(path);
                 try {
-                    FileOutputStream fos = new FileOutputStream(fichierPersistant);
+                    FileOutputStream fos = new FileOutputStream(saveFile);
                     ObjectOutputStream oos = new ObjectOutputStream(fos);
                     oos.writeObject(txtRulesList.getText());
                     oos.close();
@@ -127,8 +146,7 @@ public class ContRegles extends JPanel {
                 } catch (IOException ex) {
                 }
             }
-        });
-
+        }
     }
 
     public void delLastRule() {
@@ -149,11 +167,18 @@ public class ContRegles extends JPanel {
     }
 
     public void chargeInList() {
-        File fichierPersistant = new File(".listeregles");
+        File fileToCharge = null;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            fileToCharge = fileChooser.getSelectedFile();
+            System.out.println("Selected file: " + fileToCharge.getAbsolutePath());
+        }
 
-        if (fichierPersistant.exists()) {
+        if (fileToCharge.exists()) {
             try {
-                FileInputStream fis = new FileInputStream(fichierPersistant);
+                FileInputStream fis = new FileInputStream(fileToCharge);
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 txtRulesList.setText((String) ois.readObject());
             } catch (FileNotFoundException ex) {
@@ -171,8 +196,8 @@ public class ContRegles extends JPanel {
             String[] avap = sRegles[i].split("=>");
 
             // suppression des parenthèes            
-            String sub1 = avap[0].substring(0, avap[0].lastIndexOf(")"));
-            String sub2 = avap[1].substring(0, avap[1].lastIndexOf(")"));
+            String sub1 = avap[0].substring(1, avap[0].lastIndexOf(")"));
+            String sub2 = avap[1].substring(1, avap[1].lastIndexOf(")"));
 
             String[] ecsl = sub1.split(",");
             String[] essedi = sub2.split(",");
