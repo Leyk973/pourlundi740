@@ -58,18 +58,18 @@ public class VTuring extends JFrame {
         pnlRule.setBorder(BorderFactory.createTitledBorder("Règles"));
 
         ContExec pnlExec = new ContExec(machine);
-        pnlExec.setSize(360, 210);
+        pnlExec.setSize(360, 270);
         pnlExec.setLocation(0, 290);
         pnlExec.setBorder(BorderFactory.createTitledBorder("Exécution"));
 
         JPanel pnlRuban = new JPanel();
         pnlRuban.setLayout(new GridLayout(1, 1));
         pnlRuban.setSize(360, 90);
-        pnlRuban.setLocation(0, 510);
+        pnlRuban.setLocation(0, 570);
         pnlRuban.setBorder(BorderFactory.createTitledBorder("Ruban"));
 
         Historique pnlHist = new Historique(machine);
-        pnlHist.setSize(360,600);
+        pnlHist.setSize(360,660);
         pnlHist.setLocation(370,0);
         pnlHist.setBorder(BorderFactory.createTitledBorder("Historique"));
 
@@ -146,7 +146,7 @@ public class VTuring extends JFrame {
         this.getContentPane().add(pnlMain);
         this.pack();
         this.setVisible(true);
-        this.setSize(740, 640);
+        this.setSize(740, 700);
         this.setResizable(false);
     }
 

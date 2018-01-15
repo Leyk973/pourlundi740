@@ -11,7 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -19,6 +23,7 @@ import javax.swing.JTextField;
  */
 public class ContExec extends JPanel {
 
+    private int vitesse;
     private ModTuring modele;
     private JButton btnInit;
     private JButton btnStep;
@@ -26,9 +31,33 @@ public class ContExec extends JPanel {
     private JButton btnStop;
     private JLabel lblInit;
     private JTextField txtRubanIni;
+    private JLabel lblPlus;
+    private JLabel lblMinus;
+    private JSlider slideSpeed;
+    
+    private Runnable aFaire;
+    private Thread rebours;
+    
+     // fonction récupérer la vitesse depuis le curseur
+    
+    class Rebours implements Runnable {
+        private int multVit;
+        private Runnable aFaire;
+        
+        public Rebours (int mv, Runnable aFaire){
+            this.multVit = mv;
+            this.aFaire = aFaire;
+        }
+        
+        public void run() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
 
     public ContExec(ModTuring mod) {
         super(null);
+        this.vitesse = 5;
         this.modele = mod;
         //création éléments
         this.btnStart = new JButton("Démarrer");
@@ -37,7 +66,10 @@ public class ContExec extends JPanel {
         this.txtRubanIni = new JTextField();
         this.btnStep = new JButton("Faire un pas");
         this.btnInit = new JButton("Initialiser");
-
+        this.lblMinus = new JLabel("-", SwingConstants.CENTER);
+        this.lblPlus = new JLabel("+", SwingConstants.CENTER);
+        this.slideSpeed = new JSlider(1,10,5);
+        
         //action listeners
         btnInit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -81,6 +113,12 @@ public class ContExec extends JPanel {
 
             }
         });
+        
+        slideSpeed.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                vitesse = slideSpeed.getValue();
+            }
+        } );
 
         //placement éléments
         lblInit.setSize(80, 30);
@@ -106,6 +144,18 @@ public class ContExec extends JPanel {
         btnStop.setSize(120, 30);
         btnStop.setLocation(210, 150);
         this.add(btnStop);
+        
+        lblMinus.setSize(30,30);
+        lblMinus.setLocation(60,210);
+        this.add(lblMinus);
+        
+        slideSpeed.setSize(180,30);
+        slideSpeed.setLocation(90,210);
+        this.add(slideSpeed);
+        
+        lblPlus.setSize(30,30);
+        lblPlus.setLocation(270, 210);
+        this.add(lblPlus);
     }
 
     public void setModel(ModTuring m) {

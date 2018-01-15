@@ -28,7 +28,7 @@ public class Historique extends JPanel implements Observer {
         txtHist.setEditable(false);
         scroll = new JScrollPane(txtHist);
         
-        scroll.setSize(300, 540);
+        scroll.setSize(300, 600);
         scroll.setLocation(30, 30);
         this.add(scroll);
     }
