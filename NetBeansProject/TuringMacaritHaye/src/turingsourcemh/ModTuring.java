@@ -1,15 +1,10 @@
 package turingsourcemh;
 
-//import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
-/**
- *
- * @author Jean-Loup
- */
 public class ModTuring extends Observable {
-    
+
     private boolean machineLancee; // si machine en cours de traitement
     private boolean arret;
     private boolean demar;
@@ -49,19 +44,20 @@ public class ModTuring extends Observable {
     public void viderListeRegles() {
         this.tabRegles.clear();
     }
-    
-    public boolean lancee(){
+
+    public boolean lancee() {
         return this.machineLancee;
     }
-    
-    public void lancer(){
+
+    public void lancer() {
         this.machineLancee = true;
     }
-    
-    public void arreter(){
+
+    public void arreter() {
         this.machineLancee = false;
     }
 
+    //renvoie le contenu du ruban sous la forme d'une String
     public String stringRuban() {
         String sRub = "";
         for (int i = 0; i < ruban.length; ++i) {
@@ -183,12 +179,6 @@ public class ModTuring extends Observable {
         return stopit;
     }
 
-    /*
-    public String rubanToString() {
-        String rub = ruban.toString();
-        return rub;
-    }
-     */
     // donne une chaine de 9 caracteres centree sur la tete de lecture
     public char[] rubanParsed() {
         int limit = 9;
@@ -197,7 +187,7 @@ public class ModTuring extends Observable {
             try {
                 rub[i] = ruban[posTete - 4 + i];
             } catch (IndexOutOfBoundsException e) {
-                rub[i] = Character.MIN_VALUE; //caractere vide, mais quand meme caractere, a la difference de null
+                rub[i] = Character.MIN_VALUE; //caractere vide, mais quand meme caractere, à la difference de null
             }
         }
         for (int i = 0; i < limit; ++i) {
@@ -222,7 +212,6 @@ public class ModTuring extends Observable {
                 setChanged();
                 notifyObservers(rubanParsed());
             }
-
 // DEBUG
             System.out.println("StringRuban : " + this.stringRuban());
             System.out.println("ruban : " + this.ruban);
@@ -242,35 +231,4 @@ public class ModTuring extends Observable {
             System.out.println(r);
         }
     }
-
-    // verifier quand on lit que la case est definie, si elle ne l'est pas, 
-    // faire comme si c'était une case vide (particulierement vrai pour indices negatifs
-    /*
-    // collection de règles
-    public class TabTuRegles implements Serializable, Cloneable {
-
-        private ArrayList<TuRegle> tabTuRegles;
-
-        public TabTuRegles() {
-            this.tabTuRegles = new ArrayList<TuRegle>();
-        }
-        
-        public TabTuRegles(ArrayList<TuRegle> param) {
-            this.tabTuRegles = param;
-        }
-
-        public void ajoutRegle(TuRegle tr) {
-            this.tabTuRegles.add(tr);
-        }
-        
-        public void retraitRegle(int pos){
-            this.tabTuRegles.remove(pos);
-        }
-        
-        public int tailleTabRegles () {
-            return this.tabTuRegles.size();
-        }
-
-    }
-     */
 }

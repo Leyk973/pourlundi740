@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package turingsourcemh;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Jean-Loup
- */
 public class TuRegle implements Serializable, Cloneable {
 
     //attrbuts
@@ -31,8 +22,8 @@ public class TuRegle implements Serializable, Cloneable {
 
     //methode de verification si la regle correspond
     public boolean verif(int ecp, Character slp) {
-        System.out.println("verif : "+this+"avec ec:"+ecp+"/"+this.ec+" et sl:"+slp+"/"+this.sl);
-        if ((this.ec == (ecp)) && (this.sl.compareTo(slp) == 0)){
+        System.out.println("verif : " + this + "avec ec:" + ecp + "/" + this.ec + " et sl:" + slp + "/" + this.sl);
+        if ((this.ec == (ecp)) && (this.sl.compareTo(slp) == 0)) {
             System.out.println("ok y a une regle");
             return true;
         } else {
@@ -56,12 +47,10 @@ public class TuRegle implements Serializable, Cloneable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-    
-    public String toString(){
+
+    public String toString() {
         String res;
-        res = "("+Integer.toString(ec)+","+sl+"=>"+Integer.toString(es)+","+se+","+di.toString()+")";
+        res = "(" + Integer.toString(ec) + "," + sl + "=>" + Integer.toString(es) + "," + se + "," + di.toString() + ")";
         return res;
     }
-
-    
 }

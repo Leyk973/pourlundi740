@@ -52,6 +52,7 @@ public class ContRegles extends JPanel {
         txtRulesList.setEditable(false);
         scroll = new JScrollPane(txtRulesList);
 
+        //placement éléments
         btnCharge.setSize(120, 30);
         btnCharge.setLocation(30, 30);
         this.add(btnCharge);
@@ -123,8 +124,9 @@ public class ContRegles extends JPanel {
             }
         });
     }
-    
-    public void saveFromList(){
+
+    //sauvegarder dans un fichier les règle contenues dans la JTextArea
+    public void saveFromList() {
         File saveFile = null;
         String path;
         JFileChooser fileChooser = new JFileChooser();
@@ -133,8 +135,8 @@ public class ContRegles extends JPanel {
         if (result == JFileChooser.APPROVE_OPTION) {
             saveFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + saveFile.getAbsolutePath());
-            
-            if(!saveFile.exists()){
+
+            if (!saveFile.exists()) {
                 path = saveFile.getAbsolutePath();
                 saveFile = new File(path);
                 try {
@@ -149,6 +151,7 @@ public class ContRegles extends JPanel {
         }
     }
 
+    //supprime la dernière règle de la liste
     public void delLastRule() {
         String[] rules = txtRulesList.getText().split("\n");
         try {
@@ -163,9 +166,9 @@ public class ContRegles extends JPanel {
                     "Erreur",
                     JOptionPane.WARNING_MESSAGE);
         }
-
     }
 
+    //charge la liste de règles avec le contenu d'un fichier
     public void chargeInList() {
         File fileToCharge = null;
         JFileChooser fileChooser = new JFileChooser();
@@ -250,7 +253,6 @@ public class ContRegles extends JPanel {
         } catch (IndexOutOfBoundsException ioobe) {
             dir = Direction.pm;
         }
-
         return dir;
     }
 
@@ -274,7 +276,6 @@ public class ContRegles extends JPanel {
         } catch (IndexOutOfBoundsException ioobe) {
             res = "";
         }
-
         return res;
     }
 
@@ -317,5 +318,4 @@ public class ContRegles extends JPanel {
         String regleAff = "(" + s1 + ")=>(" + s2[0] + "," + recupSymbole(s2) + "," + recupDirectionString(s2) + ")";
         return regleAff;
     }
-
 }

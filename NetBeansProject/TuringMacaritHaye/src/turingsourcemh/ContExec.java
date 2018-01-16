@@ -12,10 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/**
- *
- * @author Jean-Loup
- */
+// panel d'exécution
 public class ContExec extends JPanel {
 
     private Integer vitesse; // a acceder dans un synchronize
@@ -86,7 +83,10 @@ public class ContExec extends JPanel {
         this.lblPlus = new JLabel("+", SwingConstants.CENTER);
         this.slideSpeed = new JSlider(1, 30, 15);
         this.vitesse = new Integer(slideSpeed.getValue());
-        this.rebours = new Thread(new Rebours(vitesse.intValue(), new Runnable(){public void run(){}}));
+        this.rebours = new Thread(new Rebours(vitesse.intValue(), new Runnable() {
+            public void run() {
+            }
+        }));
 
         //action listeners
         btnInit.addActionListener(new ActionListener() {
@@ -115,24 +115,17 @@ public class ContExec extends JPanel {
 
         btnStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                /*if (modele.arretee()) {
-                    JOptionPane.showMessageDialog(null,
-                            "Machine arrêtée",
-                            "Arrêt",
-                            JOptionPane.WARNING_MESSAGE);
-                } else {
-                    modele.deroulerTresVite();
-                }*/
                 if (modele.arretee()) {
                     JOptionPane.showMessageDialog(null,
                             "Machine arrêtée",
                             "Arrêt",
                             JOptionPane.WARNING_MESSAGE);
-                } else {
-                    //modele.deroulerTresVite();     
+                } else {    
                     rebours.interrupt();
-                    rebours = new Thread(new Rebours(vitesse.intValue(), new Runnable(){public void run(){}}));
-                    //rebours = new Thread(new Rebours(vitesse.intValue(), runAFaire));
+                    rebours = new Thread(new Rebours(vitesse.intValue(), new Runnable() {
+                        public void run() {
+                        }
+                    }));
                     modele.lancer();
                     btnStop.setEnabled(true);
                     rebours.start();
