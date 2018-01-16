@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package turingsourcemh;
 
 import java.awt.event.ActionEvent;
@@ -23,7 +18,7 @@ import javax.swing.event.ChangeListener;
  */
 public class ContExec extends JPanel {
 
-    private int vitesse;
+    private Integer vitesse; // a acceder dans un synchronize
     private ModTuring modele;
     private JButton btnInit;
     private JButton btnStep;
@@ -34,42 +29,65 @@ public class ContExec extends JPanel {
     private JLabel lblPlus;
     private JLabel lblMinus;
     private JSlider slideSpeed;
-    
+
     private Runnable aFaire;
     private Thread rebours;
-    
-     // fonction récupérer la vitesse depuis le curseur
-    
+
+    // fonction récupérer la vitesse depuis le curseur
     class Rebours implements Runnable {
-        private int multVit;
+
+        private int multVitInv; // multiplicateur temps a attendre, inv car valeur directe
+        // du curseur, le vrai multiplicateur étant 11-multVitInv
         private Runnable aFaire;
-        
-        public Rebours (int mv, Runnable aFaire){
-            this.multVit = mv;
+
+        public Rebours(int mv, Runnable aFaire) {
+            this.multVitInv = mv;
             this.aFaire = aFaire;
         }
-        
+
         public void run() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            try {
+                btnStep.setEnabled(false);
+                btnStart.setEnabled(false);
+                btnInit.setEnabled(false);
+
+                while (!(modele.arretee()) && !(Thread.currentThread().isInterrupted()) && modele.lancee()) {
+                    vitFromCursor();
+                    int temps = 10 * (31 - multVitInv);
+                    Thread.sleep(temps);
+                    modele.faireUnPas();
+                }
+            } catch (InterruptedException ex) {
+                //nothing
+            }
         }
-        
+
+        public void vitFromCursor() {
+            synchronized (vitesse) {
+                multVitInv = vitesse.intValue();
+            }
+        }
+
     }
 
     public ContExec(ModTuring mod) {
         super(null);
-        this.vitesse = 5;
+
         this.modele = mod;
         //création éléments
         this.btnStart = new JButton("Démarrer");
         this.btnStop = new JButton("Stopper");
+        this.btnStop.setEnabled(false);
         this.lblInit = new JLabel("Ruban initial:");
         this.txtRubanIni = new JTextField();
         this.btnStep = new JButton("Faire un pas");
         this.btnInit = new JButton("Initialiser");
         this.lblMinus = new JLabel("-", SwingConstants.CENTER);
         this.lblPlus = new JLabel("+", SwingConstants.CENTER);
-        this.slideSpeed = new JSlider(1,10,5);
-        
+        this.slideSpeed = new JSlider(1, 30, 15);
+        this.vitesse = new Integer(slideSpeed.getValue());
+        this.rebours = new Thread(new Rebours(vitesse.intValue(), new Runnable(){public void run(){}}));
+
         //action listeners
         btnInit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -97,28 +115,48 @@ public class ContExec extends JPanel {
 
         btnStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (modele.arretee()) {
+                /*if (modele.arretee()) {
                     JOptionPane.showMessageDialog(null,
                             "Machine arrêtée",
                             "Arrêt",
                             JOptionPane.WARNING_MESSAGE);
                 } else {
                     modele.deroulerTresVite();
+                }*/
+                if (modele.arretee()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Machine arrêtée",
+                            "Arrêt",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    //modele.deroulerTresVite();     
+                    rebours.interrupt();
+                    rebours = new Thread(new Rebours(vitesse.intValue(), new Runnable(){public void run(){}}));
+                    //rebours = new Thread(new Rebours(vitesse.intValue(), runAFaire));
+                    modele.lancer();
+                    btnStop.setEnabled(true);
+                    rebours.start();
                 }
+
             }
         });
 
         btnStop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                btnStart.setEnabled(true);
+                btnInit.setEnabled(true);
+                btnStep.setEnabled(true);
+                rebours.interrupt();
             }
         });
-        
+
         slideSpeed.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                vitesse = slideSpeed.getValue();
+                synchronized (vitesse) {
+                    vitesse = slideSpeed.getValue();
+                }
             }
-        } );
+        });
 
         //placement éléments
         lblInit.setSize(80, 30);
@@ -144,16 +182,16 @@ public class ContExec extends JPanel {
         btnStop.setSize(120, 30);
         btnStop.setLocation(210, 150);
         this.add(btnStop);
-        
-        lblMinus.setSize(30,30);
-        lblMinus.setLocation(60,210);
+
+        lblMinus.setSize(30, 30);
+        lblMinus.setLocation(60, 210);
         this.add(lblMinus);
-        
-        slideSpeed.setSize(180,30);
-        slideSpeed.setLocation(90,210);
+
+        slideSpeed.setSize(180, 30);
+        slideSpeed.setLocation(90, 210);
         this.add(slideSpeed);
-        
-        lblPlus.setSize(30,30);
+
+        lblPlus.setSize(30, 30);
         lblPlus.setLocation(270, 210);
         this.add(lblPlus);
     }

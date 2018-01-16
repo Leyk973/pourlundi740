@@ -9,7 +9,8 @@ import java.util.Observable;
  * @author Jean-Loup
  */
 public class ModTuring extends Observable {
-
+    
+    private boolean machineLancee; // si machine en cours de traitement
     private boolean arret;
     private boolean demar;
     private ArrayList<TuRegle> tabRegles;
@@ -19,6 +20,7 @@ public class ModTuring extends Observable {
     private TuRegle lastRuleUsed;
 
     public ModTuring() {
+        this.machineLancee = false;
         this.arret = false;
         this.demar = false;
         this.etatCourant = 0;
@@ -46,6 +48,18 @@ public class ModTuring extends Observable {
 
     public void viderListeRegles() {
         this.tabRegles.clear();
+    }
+    
+    public boolean lancee(){
+        return this.machineLancee;
+    }
+    
+    public void lancer(){
+        this.machineLancee = true;
+    }
+    
+    public void arreter(){
+        this.machineLancee = false;
     }
 
     public String stringRuban() {
