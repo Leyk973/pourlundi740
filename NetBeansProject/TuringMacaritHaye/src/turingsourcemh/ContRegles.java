@@ -89,32 +89,54 @@ public class ContRegles extends JPanel {
         //ajout règle
         btnAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                try {
-                    modele.ajoutTuRegle(ruleFromTF());
-                    modele.affReglesConsole();
-                    txtRulesList.setEditable(true);
-                    txtRulesList.append(stringFromTF() + "\n");
-                    txtRulesList.setEditable(false);
-                } catch (Exception exce) {
+                if (!(modele.lancee())) {
+                    try {
+                        modele.ajoutTuRegle(ruleFromTF());
+                        //modele.affReglesConsole();
+                        txtRulesList.setEditable(true);
+                        txtRulesList.append(stringFromTF() + "\n");
+                        txtRulesList.setEditable(false);
+                    } catch (Exception exce) {
+                        JOptionPane.showMessageDialog(null,
+                                "Problème d'édition de la règle.",
+                                "Erreur",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                } else {
                     JOptionPane.showMessageDialog(null,
-                            "Problème d'édition de la règle.",
+                            "Edition des règles impossible tant que la machine est lancée.",
                             "Erreur",
                             JOptionPane.WARNING_MESSAGE);
                 }
+
             }
         });
 
         // supprimer dernière regle
         btnDel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                delLastRule();
+                if (!(modele.lancee())) {
+                    delLastRule();
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Edition des règles impossible tant que la machine est lancée.",
+                            "Erreur",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 
         btnCharge.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                chargeInList();
-                setRulesFromList();
+                if (!(modele.lancee())) {
+                    chargeInList();
+                    setRulesFromList();
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Edition des règles impossible tant que la machine est lancée.",
+                            "Erreur",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 
@@ -139,19 +161,20 @@ public class ContRegles extends JPanel {
             if (!saveFile.exists()) {
                 path = saveFile.getAbsolutePath();
                 saveFile = new File(path);
-                try {
-                    FileOutputStream fos = new FileOutputStream(saveFile);
-                    ObjectOutputStream oos = new ObjectOutputStream(fos);
-                    oos.writeObject(txtRulesList.getText());
-                    oos.close();
-                } catch (FileNotFoundException ex) {
-                } catch (IOException ex) {
-                }
             }
+            try {
+                FileOutputStream fos = new FileOutputStream(saveFile);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(txtRulesList.getText());
+                oos.close();
+            } catch (FileNotFoundException ex) {
+            } catch (IOException ex) {
+            }
+
         }
     }
 
-    //supprime la dernière règle de la liste
+//supprime la dernière règle de la liste
     public void delLastRule() {
         String[] rules = txtRulesList.getText().split("\n");
         try {

@@ -41,7 +41,7 @@ public class Ruban extends JPanel implements Observer {
 
     public void paint(Graphics g) {
         super.paintComponent(g);
-        if (fait == false) { 
+        if (fait == false) {
             int bor = 30;
             int dim = 20;
 
@@ -53,7 +53,7 @@ public class Ruban extends JPanel implements Observer {
             g.setColor(Color.BLACK);
             g.drawLine(bor, bor, bor + nbC * dim, bor);
             g.drawLine(bor, bor + dim, bor + nbC * dim, bor + dim);
-            
+
             for (int i = 0; i < nbC; ++i) {
                 g.drawLine(bor + dim * i, bor, bor + dim * i, bor + dim);
                 g.drawString(Character.toString(dispRub[i]), (bor + dim * i) + 7, (bor + dim / 2) + 6);

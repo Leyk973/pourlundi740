@@ -108,7 +108,9 @@ public class ContExec extends JPanel {
                             "Arrêt",
                             JOptionPane.WARNING_MESSAGE);
                 } else {
+                    modele.lancer();
                     modele.faireUnPas();
+                    modele.arreter();
                 }
             }
         });
@@ -120,7 +122,7 @@ public class ContExec extends JPanel {
                             "Machine arrêtée",
                             "Arrêt",
                             JOptionPane.WARNING_MESSAGE);
-                } else {    
+                } else {
                     rebours.interrupt();
                     rebours = new Thread(new Rebours(vitesse.intValue(), new Runnable() {
                         public void run() {
@@ -140,6 +142,7 @@ public class ContExec extends JPanel {
                 btnInit.setEnabled(true);
                 btnStep.setEnabled(true);
                 rebours.interrupt();
+                modele.arreter(); // indique que la machine n'est plus en route
             }
         });
 

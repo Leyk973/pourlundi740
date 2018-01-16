@@ -32,9 +32,6 @@ public class ModTuring extends Observable {
         this.posTete = 0;
         setChanged();
         notifyObservers(rubanParsed());
-        // DEBUG
-        System.out.println(this.stringRuban());
-        System.out.println("ruban : " + this.ruban[0]);
     }
 
     public void iniRegles(ArrayList<TuRegle> tabR) {
@@ -120,14 +117,13 @@ public class ModTuring extends Observable {
     //retourne l'indice de la regle dans la collection
     //retourne -1 si pas de regle correspondante
     public int trouveRegle() {
-        System.out.println("hello");
         boolean e = false; // voir si regle existe
         int i = -1;
         while ((!e) && (i < tabRegles.size() - 1)) {
             ++i;
             e = this.tabRegles.get(i).verif(this.etatCourant, lireSymb());
 
-            System.out.println("i:" + i + "/" + Integer.toString(tabRegles.size() - 1));
+            //System.out.println("i:" + i + "/" + Integer.toString(tabRegles.size() - 1));
         }
         if (e) {
             return i;
@@ -140,7 +136,6 @@ public class ModTuring extends Observable {
     public void ecrireRuban(int pos, Character sym) {
         try {
             this.ruban[pos] = sym;
-            System.out.println("j'écris : " + sym);
         } catch (IndexOutOfBoundsException e) {
             // nothing
         }
@@ -165,7 +160,6 @@ public class ModTuring extends Observable {
     public boolean appliquer() {
         boolean stopit = false;
         int indRegle = trouveRegle();
-        System.out.println("indice regle : " + indRegle);
         if (indRegle != -1) {
             TuRegle regle = this.tabRegles.get(indRegle);
             this.lastRuleUsed = regle;
@@ -190,10 +184,10 @@ public class ModTuring extends Observable {
                 rub[i] = Character.MIN_VALUE; //caractere vide, mais quand meme caractere, à la difference de null
             }
         }
-        for (int i = 0; i < limit; ++i) {
-            System.out.println(rub[i]);
-        }
 
+        /*for (int i = 0; i < limit; ++i) {
+            System.out.println(rub[i]);
+        }*/
         return rub;
     }
 
@@ -207,14 +201,11 @@ public class ModTuring extends Observable {
                 this.demar = true;
             }
             this.arret = appliquer();
-            System.out.println(ruban[0]);
             if (!(this.arretee())) {
                 setChanged();
                 notifyObservers(rubanParsed());
             }
-// DEBUG
-            System.out.println("StringRuban : " + this.stringRuban());
-            System.out.println("ruban : " + this.ruban);
+
         }
 
     }
